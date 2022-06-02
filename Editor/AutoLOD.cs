@@ -22,6 +22,7 @@ namespace Unity.AutoLOD
         const string k_MinimumRequiredVersion = "AutoLOD requires Unity 2018.4 or a later version";
 
         const HideFlags k_DefaultHideFlags = HideFlags.None;
+        
         const string k_MaxExecutionTime = "AutoLOD.MaxExecutionTime";
         const int k_DefaultMaxExecutionTime = 8;
         const string k_DefaultMeshSimplifier = "AutoLOD.DefaultMeshSimplifier";
@@ -37,18 +38,28 @@ namespace Unity.AutoLOD
         const string k_SceneLODEnabled = "AutoLOD.SceneLODEnabled";
         const string k_ShowVolumeBounds = "AutoLOD.ShowVolumeBounds";
 
+        // Force load order
+        private static AutoLODSettings settings;
+
         static int maxExecutionTime
         {
+            set { AutoLODSettings.instance.maxExecutionTime = value; UpdateDependencies(); }
+            get { return AutoLODSettings.instance.maxExecutionTime; }
+            /*
             set
             {
                 EditorPrefs.SetInt(k_MaxExecutionTime, value);
                 UpdateDependencies();
             }
             get { return EditorPrefs.GetInt(k_MaxExecutionTime, k_DefaultMaxExecutionTime); }
+            */
         }
 
         static Type meshSimplifierType
         {
+            set { AutoLODSettings.instance.meshSimplifierType = value; UpdateDependencies(); }
+            get { return AutoLODSettings.instance.meshSimplifierType; }
+            /*
             set
             {
                 if (typeof(IMeshSimplifier).IsAssignableFrom(value))
@@ -65,10 +76,14 @@ namespace Unity.AutoLOD
                     type = Type.GetType(meshSimplifiers[0].AssemblyQualifiedName);
                 return type;
             }
+            */
         }
 
         static Type batcherType
         {
+            set { AutoLODSettings.instance.batcherType = value; UpdateDependencies(); }
+            get { return AutoLODSettings.instance.batcherType; }
+            /*
             set
             {
                 if (typeof(IBatcher).IsAssignableFrom(value))
@@ -85,69 +100,94 @@ namespace Unity.AutoLOD
                     type = Type.GetType(batchers[0].AssemblyQualifiedName);
                 return type;
             }
+            */
         }
 
         static int maxLOD
         {
+            set { AutoLODSettings.instance.maxLOD = value; UpdateDependencies(); }
+            get { return AutoLODSettings.instance.maxLOD; }
+            /*
             set
             {
                 EditorPrefs.SetInt(k_MaxLOD, value);
                 UpdateDependencies();
             }
             get { return EditorPrefs.GetInt(k_MaxLOD, k_DefaultMaxLOD); }
+            */
         }
 
         static bool generateOnImport
         {
+            set { AutoLODSettings.instance.generateOnImport = value; UpdateDependencies(); }
+            get { return AutoLODSettings.instance.generateOnImport; }
+            /*
             set
             {
                 EditorPrefs.SetBool(k_GenerateOnImport, value);
                 UpdateDependencies();
             }
             get { return EditorPrefs.GetBool(k_GenerateOnImport, true); }
+            */
         }
 
         static bool saveAssets
         {
+            set { AutoLODSettings.instance.saveAssets = value; UpdateDependencies(); }
+            get { return AutoLODSettings.instance.saveAssets; }
+            /*
             get { return EditorPrefs.GetBool(k_SaveAssets, true); }
             set
             {
                 EditorPrefs.SetBool(k_SaveAssets, value);
                 UpdateDependencies();
             }
+            */
         }
 
         static int initialLODMaxPolyCount
         {
+            set { AutoLODSettings.instance.initialLODMaxPolyCount = value; UpdateDependencies(); }
+            get { return AutoLODSettings.instance.initialLODMaxPolyCount; }
+            /*
             set
             {
                 EditorPrefs.SetInt(k_InitialLODMaxPolyCount, value);
                 UpdateDependencies();
             }
             get { return EditorPrefs.GetInt(k_InitialLODMaxPolyCount, k_DefaultInitialLODMaxPolyCount); }
+            */
         }
 
         static bool sceneLODEnabled
         {
+            set { AutoLODSettings.instance.sceneLODEnabled = value; UpdateDependencies(); }
+            get { return AutoLODSettings.instance.sceneLODEnabled; }
+            /*
             set
             {
                 EditorPrefs.SetBool(k_SceneLODEnabled, value);
                 UpdateDependencies();
             }
             get { return EditorPrefs.GetBool(k_SceneLODEnabled, true); }
+            */
         }
 
         static bool showVolumeBounds
         {
+            set { AutoLODSettings.instance.showVolumeBounds = value; UpdateDependencies(); }
+            get { return AutoLODSettings.instance.showVolumeBounds; }
+            /*
             set
             {
                 EditorPrefs.SetBool(k_ShowVolumeBounds, value);
                 UpdateDependencies();
             }
             get { return EditorPrefs.GetBool(k_ShowVolumeBounds, false); }
+            */
         }
 
-        static List<Type> meshSimplifiers
+        public static List<Type> meshSimplifiers
         {
             get
             {
@@ -158,7 +198,7 @@ namespace Unity.AutoLOD
             }
         }
 
-        static List<Type> batchers
+        public static List<Type> batchers
         {
             get
             {
@@ -256,6 +296,9 @@ namespace Unity.AutoLOD
         static void UpdateDependencies()
         {
 #if HAS_MINIMUM_REQUIRED_VERSION
+            // Force load order
+            AutoLODSettings settings = AutoLODSettings.instance;
+
             if (meshSimplifierType == null)
             {
                 MonoBehaviourHelper.StartCoroutine(GetDefaultSimplifier());
