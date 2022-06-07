@@ -12,7 +12,7 @@ using UnityObject = UnityEngine.Object;
 
 namespace Unity.AutoLOD
 {
-	[FilePath("ProjectSettings/AutoLODSettings.asset", FilePathAttribute.Location.ProjectFolder)]
+    [FilePath("ProjectSettings/AutoLODSettings.asset", FilePathAttribute.Location.ProjectFolder)]
     public class AutoLODSettings : ScriptableSingleton<AutoLODSettings>
     {
         public int m_maxExecutionTime = 16; // ms
@@ -30,7 +30,7 @@ namespace Unity.AutoLOD
             set
             {
                 m_maxExecutionTime = value;
-				Save(true);
+                Save(true);
             }
             get { return m_maxExecutionTime; }
         }
@@ -43,17 +43,17 @@ namespace Unity.AutoLOD
                     m_meshSimplifierType = value.AssemblyQualifiedName;
                 else if (value == null)
                     m_meshSimplifierType = null;
-				Save(true);
+                Save(true);
             }
             get
             {
-				Type type = null;
-				if (m_meshSimplifierType != null)
-				{
-					type = Type.GetType(m_meshSimplifierType);
-                	if (type == null && AutoLOD.meshSimplifiers.Count > 0)
-                    	type = Type.GetType(AutoLOD.meshSimplifiers[0].AssemblyQualifiedName);
-				}
+                Type type = null;
+                if (m_meshSimplifierType != null)
+                {
+                    type = Type.GetType(m_meshSimplifierType);
+                    if (type == null && AutoLOD.meshSimplifiers.Count > 0)
+                        type = Type.GetType(AutoLOD.meshSimplifiers[0].AssemblyQualifiedName);
+                }
                 return type;
             }
         }
@@ -66,17 +66,17 @@ namespace Unity.AutoLOD
                     m_batcherType = value.AssemblyQualifiedName;
                 else if (value == null)
                     m_batcherType = null;
-				Save(true);
+                Save(true);
             }
             get
             {
-				Type type = null;
-				if (m_batcherType != null)
-				{
-					type = Type.GetType(m_batcherType);
-                	if (type == null && AutoLOD.batchers.Count > 0)
-                    	type = Type.GetType(AutoLOD.batchers[0].AssemblyQualifiedName);
-				}
+                Type type = null;
+                if (m_batcherType != null)
+                {
+                    type = Type.GetType(m_batcherType);
+                    if (type == null && AutoLOD.batchers.Count > 0)
+                        type = Type.GetType(AutoLOD.batchers[0].AssemblyQualifiedName);
+                }
                 return type;
             }
         }
@@ -86,7 +86,7 @@ namespace Unity.AutoLOD
             set
             {
                 m_maxLOD = value;
-				Save(true);
+                Save(true);
             }
             get { return m_maxLOD; }
         }
@@ -96,7 +96,7 @@ namespace Unity.AutoLOD
             set
             {
                 m_generateOnImport = value;
-				Save(true);
+                Save(true);
             }
             get { return m_generateOnImport; }
         }
@@ -106,7 +106,7 @@ namespace Unity.AutoLOD
             set
             {
                 m_saveAssets = value;
-				Save(true);
+                Save(true);
             }
             get { return m_saveAssets; }
         }
@@ -116,7 +116,7 @@ namespace Unity.AutoLOD
             set
             {
                 m_initialLODMaxPolyCount = value;
-				Save(true);
+                Save(true);
             }
             get { return m_initialLODMaxPolyCount; }
         }
@@ -126,7 +126,7 @@ namespace Unity.AutoLOD
             set
             {
                 m_sceneLODEnabled = value;
-				Save(true);
+                Save(true);
             }
             get { return m_sceneLODEnabled; }
         }
@@ -136,7 +136,7 @@ namespace Unity.AutoLOD
             set
             {
                 m_showVolumeBounds = value;
-				Save(true);
+                Save(true);
             }
             get { return m_showVolumeBounds; }
         }
